@@ -4,6 +4,7 @@ import secrets, json, re
 import IPython.utils.io
 import ipywidgets
 import pyngrok.ngrok, pyngrok.conf
+import pickle
 
 # https://salsa.debian.org/apt-team/python-apt
 # https://apt-team.pages.debian.net/python-apt/library/index.html
@@ -208,8 +209,19 @@ def _setupSSHDImpl(public_key, tunnel, ngrok_token, ngrok_region, is_VNC):
     msg += "✂️"*24 + "\n"
     msg += f"ssh {ssh_common_options} {user_name}@{hostname}\n"
     msg += "✂️"*24 + "\n"
+  filename1 = 'common.pk'
+  filename2 = 'user.pk'
+  filename3 = 'host.pk'
+  with open(filename1, 'wb') as fi:
+    pickle.dump(ssh_common_options, fi)
+    
+  with open(filename2, 'wb') as fi:
+    pickle.dump(user_name, fi)
+    
+  with open(filename3, 'wb') as fi:
+    pickle.dump(hostname, fi)
+    
   return msg
-  return ssh_common_options, user_name, hostname
 
 def _setupSSHDMain(public_key, tunnel, ngrok_region, check_gpu_available, is_VNC):
   if check_gpu_available and not _check_gpu_available():
@@ -378,16 +390,49 @@ def setupVNC(ngrok_region = None, check_gpu_available = True, tunnel = "ngrok", 
   print(msg)
   
 def ngrokpeerflix():
-  ssh_common_options, user_name, hostname = _setupSSHDImpl()
+  filename1 = 'common.pk'
+  filename2 = 'user.pk'
+  filename3 = 'host.pk'
+  with open(filename1, 'rb') as fi:
+    ssh_common_options = pickle.load(fi)
+    
+  with open(filename2, 'rb') as fi:
+    user_name = pickle.load(fi)
+    
+  with open(filename3, 'rb') as fi:
+    hostname = pickle.load(fi)
+  
   msg = " Insert this command on CMD if Windows, or terminal if Linux: "
   msg += f"ssh {ssh_common_options} -L 9001:localhost:9001 {user_name}@{hostname}\n"
   
 def ngroktransmission():
-  ssh_common_options, user_name, hostname = _setupSSHDImpl()
+  filename1 = 'common.pk'
+  filename2 = 'user.pk'
+  filename3 = 'host.pk'
+  with open(filename1, 'rb') as fi:
+    ssh_common_options = pickle.load(fi)
+    
+  with open(filename2, 'rb') as fi:
+    user_name = pickle.load(fi)
+    
+  with open(filename3, 'rb') as fi:
+    hostname = pickle.load(fi)
+    
   msg = " Insert this command on CMD if Windows, or terminal if Linux: "
   msg += f"ssh {ssh_common_options} -L 9091:localhost:9091 {user_name}@{hostname}\n"
   
 def ngrokdeluge():
-  ssh_common_options, user_name, hostname = _setupSSHDImpl()
+  filename1 = 'common.pk'
+  filename2 = 'user.pk'
+  filename3 = 'host.pk'
+  with open(filename1, 'rb') as fi:
+    ssh_common_options = pickle.load(fi)
+    
+  with open(filename2, 'rb') as fi:
+    user_name = pickle.load(fi)
+    
+  with open(filename3, 'rb') as fi:
+    hostname = pickle.load(fi)
+  
   msg = " Insert this command on CMD if Windows, or terminal if Linux: "
   msg += f"ssh {ssh_common_options} -L 8112:localhost:8112 {user_name}@{hostname}\n"
