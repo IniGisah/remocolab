@@ -376,14 +376,14 @@ def setupVNC(ngrok_region = None, check_gpu_available = True, tunnel = "ngrok", 
 
   print(msg)
   
-def ngrokpeerflix
+def ngrokpeerflix():
   msg = " Insert this command on CMD if Windows, or terminal if Linux: "
   msg += f"ssh {ssh_common_options} -L 9001:localhost:9001 {user_name}@{hostname}\n"
   
-def ngroktransmission
+def ngroktransmission():
   msg = " Insert this command on CMD if Windows, or terminal if Linux: "
   msg += f"ssh {ssh_common_options} -L 9091:localhost:9091 {user_name}@{hostname}\n"
   
-def ngrokdeluge
+def ngrokdeluge():
   msg = " Insert this command on CMD if Windows, or terminal if Linux: "
   msg += f"ssh {ssh_common_options} -L 8112:localhost:8112 {user_name}@{hostname}\n"
