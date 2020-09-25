@@ -404,6 +404,7 @@ def ngrokpeerflix():
   
   msg = " Insert this command on CMD if Windows, or terminal if Linux: "
   msg += f"ssh {ssh_common_options} -L 9001:localhost:9001 {user_name}@{hostname}\n"
+  print(msg)
   
 def ngroktransmission():
   filename1 = 'common.pk'
@@ -420,6 +421,7 @@ def ngroktransmission():
     
   msg = " Insert this command on CMD if Windows, or terminal if Linux: "
   msg += f"ssh {ssh_common_options} -L 9091:localhost:9091 {user_name}@{hostname}\n"
+  print(msg)
   
 def ngrokdeluge():
   filename1 = 'common.pk'
@@ -436,3 +438,4 @@ def ngrokdeluge():
   
   msg = " Insert this command on CMD if Windows, or terminal if Linux: "
   msg += f"ssh {ssh_common_options} -L 8112:localhost:8112 {user_name}@{hostname}\n"
+  print(msg)
