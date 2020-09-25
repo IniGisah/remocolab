@@ -209,6 +209,7 @@ def _setupSSHDImpl(public_key, tunnel, ngrok_token, ngrok_region, is_VNC):
     msg += f"ssh {ssh_common_options} {user_name}@{hostname}\n"
     msg += "✂️"*24 + "\n"
   return msg
+  return ssh_common_options, user_name, hostname
 
 def _setupSSHDMain(public_key, tunnel, ngrok_region, check_gpu_available, is_VNC):
   if check_gpu_available and not _check_gpu_available():
@@ -377,13 +378,16 @@ def setupVNC(ngrok_region = None, check_gpu_available = True, tunnel = "ngrok", 
   print(msg)
   
 def ngrokpeerflix():
+  ssh_common_options, user_name, hostname = _setupSSHDImpl()
   msg = " Insert this command on CMD if Windows, or terminal if Linux: "
   msg += f"ssh {ssh_common_options} -L 9001:localhost:9001 {user_name}@{hostname}\n"
   
 def ngroktransmission():
+  ssh_common_options, user_name, hostname = _setupSSHDImpl()
   msg = " Insert this command on CMD if Windows, or terminal if Linux: "
   msg += f"ssh {ssh_common_options} -L 9091:localhost:9091 {user_name}@{hostname}\n"
   
 def ngrokdeluge():
+  ssh_common_options, user_name, hostname = _setupSSHDImpl()
   msg = " Insert this command on CMD if Windows, or terminal if Linux: "
   msg += f"ssh {ssh_common_options} -L 8112:localhost:8112 {user_name}@{hostname}\n"
