@@ -402,7 +402,7 @@ def ngrokpeerflix():
   with open(filename3, 'rb') as fi:
     hostname = pickle.load(fi)
   
-  msg = " Insert this command on CMD if Windows, or terminal if Linux: "
+  msg = " Insert this command on CMD if Windows, or terminal if Linux: \n"
   msg += f"ssh {ssh_common_options} -L 9001:localhost:9001 {user_name}@{hostname}\n"
   print(msg)
   
@@ -419,7 +419,7 @@ def ngroktransmission():
   with open(filename3, 'rb') as fi:
     hostname = pickle.load(fi)
     
-  msg = " Insert this command on CMD if Windows, or terminal if Linux: "
+  msg = " Insert this command on CMD if Windows, or terminal if Linux: \n"
   msg += f"ssh {ssh_common_options} -L 9091:localhost:9091 {user_name}@{hostname}\n"
   print(msg)
   
@@ -436,6 +436,6 @@ def ngrokdeluge():
   with open(filename3, 'rb') as fi:
     hostname = pickle.load(fi)
   
-  msg = " Insert this command on CMD if Windows, or terminal if Linux: "
+  msg = " Insert this command on CMD if Windows, or terminal if Linux: \n"
   msg += f"ssh {ssh_common_options} -L 8112:localhost:8112 {user_name}@{hostname}\n"
   print(msg)
