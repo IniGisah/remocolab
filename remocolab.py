@@ -453,7 +453,7 @@ def ngroktransmission():
     user_password = pickle.load(fi)
   
   msg = " Insert this command on CMD if Windows, or terminal if Linux: \n"
-  msg += f"ssh {ssh_common_options} -L 9001:localhost:9001 {user_name}@{hostname}\n"
+  msg += f"ssh {ssh_common_options} -L 9091:localhost:9091 {user_name}@{hostname}\n"
   msg += "✂️"*24 + "\n"
   msg += f"root password: {root_password}\n"
   msg += f"{user_name} password: {user_password}\n"
@@ -482,7 +482,7 @@ def ngrokdeluge():
     user_password = pickle.load(fi)
   
   msg = " Insert this command on CMD if Windows, or terminal if Linux: \n"
-  msg += f"ssh {ssh_common_options} -L 9001:localhost:9001 {user_name}@{hostname}\n"
+  msg += f"ssh {ssh_common_options} -L 8112:localhost:8112 {user_name}@{hostname}\n"
   msg += "✂️"*24 + "\n"
   msg += f"root password: {root_password}\n"
   msg += f"{user_name} password: {user_password}\n"
