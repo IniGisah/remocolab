@@ -117,7 +117,7 @@ def _set_public_key(user, public_key):
       shutil.chown(ssh_dir, user)
       shutil.chown(auth_keys_file, user)
 
-def _setupSSHDImpl(public_key, tunnel, ngrok_token, ngrok_region, is_VNC):
+def _setupSSHDImpl(public_key, tunnel, ngrok_token, ngrok_region, is_VNC, user_password):
   #apt-get update
   #apt-get upgrade
   my_apt = _MyApt()
@@ -158,12 +158,21 @@ def _setupSSHDImpl(public_key, tunnel, ngrok_token, ngrok_region, is_VNC):
   msg += ret.stdout + "\n"
 
   root_password = secrets.token_urlsafe()
-  user_password = secrets.token_urlsafe()
+  #user_password = secrets.token_urlsafe()
   user_name = "colab"
   msg += "✂️"*24 + "\n"
   msg += f"root password: {root_password}\n"
   msg += f"{user_name} password: {user_password}\n"
   msg += "✂️"*24 + "\n"
+  filename4 = 'rootpass.pk'
+  filename5 = 'userpass.pk'
+
+  with open(filename4, 'wb') as fi:
+    pickle.dump(root_password, fi)
+
+  with open(filename5, 'wb') as fi:
+    pickle.dump(user_password, fi)
+
   subprocess.run(["useradd", "-s", "/bin/bash", "-m", user_name])
   subprocess.run(["adduser", user_name, "sudo"], check = True)
   subprocess.run(["chpasswd"], input = f"root:{root_password}", universal_newlines = True)
@@ -233,7 +242,7 @@ def _setupSSHDMain(public_key, tunnel, ngrok_region, check_gpu_available, is_VNC
     raise RuntimeError("tunnel argument must be one of " + str(avail_tunnels))
 
   ngrok_token = None
-
+  
   if tunnel == "ngrok":
     print("Copy&paste your tunnel authtoken from https://dashboard.ngrok.com/auth")
     print("(You need to sign up for ngrok and login,)")
@@ -250,8 +259,12 @@ def _setupSSHDMain(public_key, tunnel, ngrok_region, check_gpu_available, is_VNC
       print("jp - Japan (Tokyo)")
       print("in - India (Mumbai)")
       ngrok_region = region = input()
+  
+  user_password = None
+  print("\nInput 'colab' user password")
+  user_password = getpass.getpass()
 
-  return (True, _setupSSHDImpl(public_key, tunnel, ngrok_token, ngrok_region, is_VNC))
+  return (True, _setupSSHDImpl(public_key, tunnel, ngrok_token, ngrok_region, is_VNC, user_password))
 
 def setupSSHD(ngrok_region = None, check_gpu_available = False, tunnel = "ngrok", public_key = None):
   s, msg = _setupSSHDMain(public_key, tunnel, ngrok_region, check_gpu_available, False)
@@ -393,6 +406,8 @@ def ngrokpeerflix():
   filename1 = 'common.pk'
   filename2 = 'user.pk'
   filename3 = 'host.pk'
+  filename4 = 'rootpass.pk'
+  filename5 = 'userpass.pk'
   with open(filename1, 'rb') as fi:
     ssh_common_options = pickle.load(fi)
     
@@ -401,15 +416,27 @@ def ngrokpeerflix():
     
   with open(filename3, 'rb') as fi:
     hostname = pickle.load(fi)
+
+  with open(filename4, 'rb') as fi:
+    root_password = pickle.load(fi)
+
+  with open(filename5, 'rb') as fi:
+    user_password = pickle.load(fi)
   
   msg = " Insert this command on CMD if Windows, or terminal if Linux: \n"
   msg += f"ssh {ssh_common_options} -L 9001:localhost:9001 {user_name}@{hostname}\n"
+  msg += "✂️"*24 + "\n"
+  msg += f"root password: {root_password}\n"
+  msg += f"{user_name} password: {user_password}\n"
+  msg += "✂️"*24 + "\n"
   print(msg)
   
 def ngroktransmission():
   filename1 = 'common.pk'
   filename2 = 'user.pk'
   filename3 = 'host.pk'
+  filename4 = 'rootpass.pk'
+  filename5 = 'userpass.pk'
   with open(filename1, 'rb') as fi:
     ssh_common_options = pickle.load(fi)
     
@@ -419,14 +446,26 @@ def ngroktransmission():
   with open(filename3, 'rb') as fi:
     hostname = pickle.load(fi)
     
+  with open(filename4, 'rb') as fi:
+    root_password = pickle.load(fi)
+
+  with open(filename5, 'rb') as fi:
+    user_password = pickle.load(fi)
+  
   msg = " Insert this command on CMD if Windows, or terminal if Linux: \n"
-  msg += f"ssh {ssh_common_options} -L 9091:localhost:9091 {user_name}@{hostname}\n"
+  msg += f"ssh {ssh_common_options} -L 9001:localhost:9001 {user_name}@{hostname}\n"
+  msg += "✂️"*24 + "\n"
+  msg += f"root password: {root_password}\n"
+  msg += f"{user_name} password: {user_password}\n"
+  msg += "✂️"*24 + "\n"
   print(msg)
   
 def ngrokdeluge():
   filename1 = 'common.pk'
   filename2 = 'user.pk'
   filename3 = 'host.pk'
+  filename4 = 'rootpass.pk'
+  filename5 = 'userpass.pk'
   with open(filename1, 'rb') as fi:
     ssh_common_options = pickle.load(fi)
     
@@ -436,6 +475,16 @@ def ngrokdeluge():
   with open(filename3, 'rb') as fi:
     hostname = pickle.load(fi)
   
+  with open(filename4, 'rb') as fi:
+    root_password = pickle.load(fi)
+
+  with open(filename5, 'rb') as fi:
+    user_password = pickle.load(fi)
+  
   msg = " Insert this command on CMD if Windows, or terminal if Linux: \n"
-  msg += f"ssh {ssh_common_options} -L 8112:localhost:8112 {user_name}@{hostname}\n"
+  msg += f"ssh {ssh_common_options} -L 9001:localhost:9001 {user_name}@{hostname}\n"
+  msg += "✂️"*24 + "\n"
+  msg += f"root password: {root_password}\n"
+  msg += f"{user_name} password: {user_password}\n"
+  msg += "✂️"*24 + "\n"
   print(msg)
