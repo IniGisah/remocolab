@@ -488,3 +488,32 @@ def ngrokdeluge():
   msg += f"{user_name} password: {user_password}\n"
   msg += "✂️"*24 + "\n"
   print(msg)
+
+def ngrokaria():
+  filename1 = 'common.pk'
+  filename2 = 'user.pk'
+  filename3 = 'host.pk'
+  filename4 = 'rootpass.pk'
+  filename5 = 'userpass.pk'
+  with open(filename1, 'rb') as fi:
+    ssh_common_options = pickle.load(fi)
+    
+  with open(filename2, 'rb') as fi:
+    user_name = pickle.load(fi)
+    
+  with open(filename3, 'rb') as fi:
+    hostname = pickle.load(fi)
+  
+  with open(filename4, 'rb') as fi:
+    root_password = pickle.load(fi)
+
+  with open(filename5, 'rb') as fi:
+    user_password = pickle.load(fi)
+  
+  msg = " Insert this command on CMD if Windows, or terminal if Linux: \n"
+  msg += f"ssh {ssh_common_options} -L 5577:localhost:80 {user_name}@{hostname}\n"
+  msg += "✂️"*24 + "\n"
+  msg += f"root password: {root_password}\n"
+  msg += f"{user_name} password: {user_password}\n"
+  msg += "✂️"*24 + "\n"
+  print(msg)
