@@ -511,7 +511,7 @@ def ngrokaria():
     user_password = pickle.load(fi)
   
   msg = " Insert this command on CMD if Windows, or terminal if Linux: \n"
-  msg += f"ssh {ssh_common_options} -L 5577:localhost:80 {user_name}@{hostname}\n"
+  msg += f"ssh {ssh_common_options} -L 6800:localhost:6800 -L 5577:localhost:80 {user_name}@{hostname}\n"
   msg += "✂️"*24 + "\n"
   msg += f"root password: {root_password}\n"
   msg += f"{user_name} password: {user_password}\n"
