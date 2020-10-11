@@ -1,12 +1,15 @@
+
 # remocolab
 remocolab is a Python module to allow remote access to [Google Colaboratory](https://colab.research.google.com/) using SSH or [TurboVNC](https://www.turbovnc.org/).
 It also install [VirtualGL](https://www.virtualgl.org/) so that you can run OpenGL programs on a Google Colaboratory machine and see the screen on VNC client.
 It secures TurboVNC connection using SSH port forwarding.
-
+>Forked from https://github.com/demotomohiro/remocolab, this repo is just for my personal use
+>you can try it though, at here [Link](https://github.com/IniGisah/remocolab/blob/master/rdp_colab.ipynb)
+>It is an access to ssh Google Colab server, plus some torrenting and downloading services to Google Drive, from web UI, through ssh port forwarding
 - [FAQ](https://github.com/demotomohiro/remocolab/wiki/Frequently-Asked-Questions)
 
 ## How to access SSH server running in colab?
-You cannot directory login to the SSH server running on a colab instace.
+You cannot directory login to the SSH server running on a colab instance.
 remocolab uses third party service to access it from your PC.
 You can choose [ngrok](https://ngrok.com/) or [Argo Tunnel](https://www.cloudflare.com/products/argo-tunnel/).
 You don't need to buy paid plan.
